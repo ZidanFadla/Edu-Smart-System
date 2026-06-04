@@ -21,9 +21,9 @@ class UpdateGuruRequest extends FormRequest
             'user_id' => ['nullable', 'exists:users,id'],
             'account_email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($userId)],
             'account_password' => ['nullable', 'string', 'min:8'],
+            'mapel_id' => ['required', 'exists:mapels,id'],
             'id_guru' => ['required', 'string', 'max:50', Rule::unique('gurus', 'id_guru')->ignore($guruId)],
             'nama_guru' => ['required', 'string', 'max:255'],
-            'mata_pelajaran' => ['required', 'string', 'max:100'],
         ];
     }
 }

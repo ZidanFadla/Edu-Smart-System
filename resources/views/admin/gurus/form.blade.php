@@ -36,7 +36,12 @@
         </div>
         <div>
             <label class="mb-2 block text-sm font-semibold text-slate-700">Mata Pelajaran</label>
-            <input name="mata_pelajaran" value="{{ old('mata_pelajaran', $guru->mata_pelajaran) }}" class="soft-input w-full px-3 py-2.5 text-sm" required>
+            <select name="mapel_id" class="soft-input w-full px-3 py-2.5 text-sm" required>
+                <option value="">Pilih mapel</option>
+                @foreach ($mapels as $mapel)
+                    <option value="{{ $mapel->id }}" @selected(old('mapel_id', $guru->mapel_id) == $mapel->id)>{{ $mapel->kode_mapel }} - {{ $mapel->nama_mapel }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="mt-6 flex gap-3">

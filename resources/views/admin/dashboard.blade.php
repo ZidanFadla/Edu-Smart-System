@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="grid gap-4 md:grid-cols-4">
-        @foreach ([['Siswa', $jumlahSiswa, 'bg-indigo-50 text-indigo-700'], ['Guru', $jumlahGuru, 'bg-cyan-50 text-cyan-700'], ['Data Nilai', $jumlahNilai, 'bg-amber-50 text-amber-700'], ['Nilai Valid', $jumlahNilaiValid, 'bg-emerald-50 text-emerald-700']] as [$label, $value, $tone])
+        @foreach ([['Siswa', $jumlahSiswa, 'bg-indigo-50 text-indigo-700'], ['Guru', $jumlahGuru, 'bg-cyan-50 text-cyan-700'], ['Mapel', $jumlahMapel, 'bg-sky-50 text-sky-700'], ['Data Nilai', $jumlahNilai, 'bg-amber-50 text-amber-700'], ['Nilai Valid', $jumlahNilaiValid, 'bg-emerald-50 text-emerald-700']] as [$label, $value, $tone])
             <div class="panel p-5 transition hover:-translate-y-0.5 hover:shadow-xl">
                 <div class="flex items-center justify-between">
                     <div class="text-sm font-bold text-slate-500">{{ $label }}</div>
@@ -27,8 +27,9 @@
                     <p class="mt-1 text-sm text-slate-500">Mulai kelola data akademik dari menu utama.</p>
                 </div>
             </div>
-            <div class="mt-5 grid gap-3 sm:grid-cols-3">
+            <div class="mt-5 grid gap-3 sm:grid-cols-4">
                 <a href="{{ route('admin.siswas.create') }}" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-bold text-slate-800 hover:bg-white hover:shadow-sm">Tambah Siswa</a>
+                <a href="{{ route('admin.mapels.create') }}" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-bold text-slate-800 hover:bg-white hover:shadow-sm">Tambah Mapel</a>
                 <a href="{{ route('admin.gurus.create') }}" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-bold text-slate-800 hover:bg-white hover:shadow-sm">Tambah Guru</a>
                 <a href="{{ route('admin.nilais.create') }}" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm font-bold text-slate-800 hover:bg-white hover:shadow-sm">Input Nilai</a>
             </div>

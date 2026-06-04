@@ -11,7 +11,7 @@ class SiswaDashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $siswa = $request->user()->siswa;
-        $nilais = $siswa?->nilais()->with('guru')->latest()->get() ?? collect();
+        $nilais = $siswa?->nilais()->with(['guru', 'mapel'])->latest()->get() ?? collect();
 
         return view('siswa.dashboard', [
             'siswa' => $siswa,
@@ -23,7 +23,7 @@ class SiswaDashboardController extends Controller
     public function nilai(Request $request): View
     {
         $siswa = $request->user()->siswa;
-        $nilais = $siswa?->nilais()->with('guru')->latest()->paginate(10) ?? collect();
+        $nilais = $siswa?->nilais()->with(['guru', 'mapel'])->latest()->paginate(10) ?? collect();
 
         return view('siswa.nilai', [
             'siswa' => $siswa,

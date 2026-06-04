@@ -33,6 +33,7 @@
                     @if (auth()->user()->role === 'admin')
                         <a href="{{ route('admin.dashboard') }}" class="{{ $navItem }} {{ request()->routeIs('admin.dashboard') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">D</span>Dashboard</a>
                         <a href="{{ route('admin.siswas.index') }}" class="{{ $navItem }} {{ request()->routeIs('admin.siswas.*') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">S</span>Data Siswa</a>
+                        <a href="{{ route('admin.mapels.index') }}" class="{{ $navItem }} {{ request()->routeIs('admin.mapels.*') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">M</span>Data Mapel</a>
                         <a href="{{ route('admin.gurus.index') }}" class="{{ $navItem }} {{ request()->routeIs('admin.gurus.*') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">G</span>Data Guru</a>
                         <a href="{{ route('admin.nilais.index') }}" class="{{ $navItem }} {{ request()->routeIs('admin.nilais.*') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">N</span>Data Nilai</a>
                         <a href="{{ route('admin.laporan.index') }}" class="{{ $navItem }} {{ request()->routeIs('admin.laporan.*') ? $navActive : $navIdle }}"><span class="grid size-8 place-items-center rounded-lg bg-white/10">L</span>Laporan</a>

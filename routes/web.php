@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\NilaiController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
         Route::resource('siswas', SiswaController::class)->except(['show']);
+        Route::resource('mapels', MapelController::class)->except(['show']);
         Route::resource('gurus', GuruController::class)->except(['show']);
         Route::patch('nilais/{nilai}/validasi', [NilaiController::class, 'validateNilai'])->name('nilais.validasi');
         Route::resource('nilais', NilaiController::class)->except(['show']);

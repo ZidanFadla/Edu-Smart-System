@@ -13,7 +13,7 @@ class Nilai extends Model
     protected $fillable = [
         'siswa_id',
         'guru_id',
-        'mata_pelajaran',
+        'mapel_id',
         'nilai_tugas',
         'nilai_uts',
         'nilai_uas',
@@ -40,5 +40,10 @@ class Nilai extends Model
     public function guru(): BelongsTo
     {
         return $this->belongsTo(Guru::class);
+    }
+
+    public function mapel(): BelongsTo
+    {
+        return $this->belongsTo(Mapel::class);
     }
 }

@@ -18,13 +18,18 @@
             <select name="guru_id" class="soft-input w-full px-3 py-2.5 text-sm" required>
                 <option value="">Pilih guru</option>
                 @foreach ($gurus as $guru)
-                    <option value="{{ $guru->id }}" @selected(old('guru_id', $nilai->guru_id) == $guru->id)>{{ $guru->nama_guru }} - {{ $guru->mata_pelajaran }}</option>
+                    <option value="{{ $guru->id }}" @selected(old('guru_id', $nilai->guru_id) == $guru->id)>{{ $guru->nama_guru }} - {{ $guru->mapel?->nama_mapel }}</option>
                 @endforeach
             </select>
         </div>
         <div>
             <label class="mb-2 block text-sm font-semibold text-slate-700">Mata Pelajaran</label>
-            <input name="mata_pelajaran" value="{{ old('mata_pelajaran', $nilai->mata_pelajaran) }}" class="soft-input w-full px-3 py-2.5 text-sm" required>
+            <select name="mapel_id" class="soft-input w-full px-3 py-2.5 text-sm" required>
+                <option value="">Pilih mapel</option>
+                @foreach ($mapels as $mapel)
+                    <option value="{{ $mapel->id }}" @selected(old('mapel_id', $nilai->mapel_id) == $mapel->id)>{{ $mapel->kode_mapel }} - {{ $mapel->nama_mapel }}</option>
+                @endforeach
+            </select>
         </div>
         <div>
             <label class="mb-2 block text-sm font-semibold text-slate-700">Nilai Tugas</label>

@@ -21,7 +21,7 @@
             <tbody class="divide-y divide-slate-100">
                 @forelse ($nilais as $nilai)
                     <tr>
-                        <td class="px-4 py-3 font-medium text-slate-900">{{ $nilai->mata_pelajaran }}</td>
+                        <td class="px-4 py-3 font-medium text-slate-900">{{ $nilai->mapel?->nama_mapel ?? '-' }}</td>
                         <td class="px-4 py-3">{{ $nilai->guru?->nama_guru }}</td>
                         <td class="px-4 py-3">{{ $nilai->nilai_tugas }}</td>
                         <td class="px-4 py-3">{{ $nilai->nilai_uts }}</td>

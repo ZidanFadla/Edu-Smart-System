@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreNilaiRequest;
 use App\Http\Requests\UpdateNilaiRequest;
 use App\Models\Guru;
+use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Services\NilaiService;
@@ -21,7 +22,7 @@ class NilaiController extends Controller
 
     public function index(Request $request): View
     {
-        $query = Nilai::with(['siswa', 'guru'])->latest();
+        $query = Nilai::with(['siswa', 'guru', 'mapel'])->latest();
 
         if ($request->user()->role === 'guru') {
             $guru = $request->user()->guru;
@@ -40,15 +41,17 @@ class NilaiController extends Controller
         $guru = $request->user()->role === 'guru' ? $request->user()->guru : null;
 
         return view('admin.nilais.create', [
-            'nilai' => new Nilai(['guru_id' => $guru?->id, 'mata_pelajaran' => $guru?->mata_pelajaran]),
+            'nilai' => new Nilai(['guru_id' => $guru?->id, 'mapel_id' => $guru?->mapel_id]),
             'siswas' => Siswa::orderBy('nama')->get(),
-            'gurus' => $guru ? collect([$guru]) : Guru::orderBy('nama_guru')->get(),
+            'gurus' => $guru ? collect([$guru->load('mapel')]) : Guru::with('mapel')->orderBy('nama_guru')->get(),
+            'mapels' => $guru ? collect([$guru->mapel])->filter() : Mapel::orderBy('nama_mapel')->get(),
         ]);
     }
 
     public function store(StoreNilaiRequest $request): RedirectResponse
     {
-        $data = $this->nilaiService->lengkapiDataNilai($request->validated());
+        $data = $this->normalizeMapelData($request->validated());
+        $data = $this->nilaiService->lengkapiDataNilai($data);
         $data['status_validasi'] = 'pending';
 
         Nilai::create($data);
@@ -67,7 +70,8 @@ class NilaiController extends Controller
         return view('admin.nilais.edit', [
             'nilai' => $nilai,
             'siswas' => Siswa::orderBy('nama')->get(),
-            'gurus' => $guru ? collect([$guru]) : Guru::orderBy('nama_guru')->get(),
+            'gurus' => $guru ? collect([$guru->load('mapel')]) : Guru::with('mapel')->orderBy('nama_guru')->get(),
+            'mapels' => $guru ? collect([$guru->mapel])->filter() : Mapel::orderBy('nama_mapel')->get(),
         ]);
     }
 
@@ -77,7 +81,8 @@ class NilaiController extends Controller
 
         abort_if($request->user()->role === 'guru' && $nilai->status_validasi === 'valid', 403, 'Nilai yang sudah valid tidak dapat diedit guru.');
 
-        $data = $this->nilaiService->lengkapiDataNilai($request->validated());
+        $data = $this->normalizeMapelData($request->validated());
+        $data = $this->nilaiService->lengkapiDataNilai($data);
         $data['status_validasi'] = $request->user()->role === 'guru' ? 'pending' : $nilai->status_validasi;
 
         $nilai->update($data);
@@ -115,5 +120,20 @@ class NilaiController extends Controller
         $route = $request->user()->role === 'guru' ? 'guru.nilais.index' : 'admin.nilais.index';
 
         return redirect()->route($route)->with('success', $message);
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    private function normalizeMapelData(array $data): array
+    {
+        $guru = Guru::find($data['guru_id']);
+
+        if ($guru) {
+            $data['mapel_id'] = $guru->mapel_id;
+        }
+
+        return $data;
     }
 }

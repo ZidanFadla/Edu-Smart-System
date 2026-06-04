@@ -4,32 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Guru extends Model
+class Mapel extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'mapel_id',
-        'id_guru',
-        'nama_guru',
+        'kode_mapel',
+        'nama_mapel',
     ];
 
-    public function user(): BelongsTo
+    public function gurus(): HasMany
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Guru::class);
     }
 
     public function nilais(): HasMany
     {
         return $this->hasMany(Nilai::class);
-    }
-
-    public function mapel(): BelongsTo
-    {
-        return $this->belongsTo(Mapel::class);
     }
 }

@@ -23,7 +23,7 @@
                     <tr>
                         <td class="px-4 py-3 font-medium text-slate-900">{{ $guru->id_guru }}</td>
                         <td class="px-4 py-3">{{ $guru->nama_guru }}</td>
-                        <td class="px-4 py-3">{{ $guru->mata_pelajaran }}</td>
+                        <td class="px-4 py-3">{{ $guru->mapel?->nama_mapel ?? '-' }}</td>
                         <td class="px-4 py-3">{{ $guru->user?->email ?? '-' }}</td>
                         <td class="px-4 py-3">
                             <div class="flex justify-end gap-2">

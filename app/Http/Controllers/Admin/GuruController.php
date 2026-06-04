@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGuruRequest;
 use App\Http\Requests\UpdateGuruRequest;
 use App\Models\Guru;
+use App\Models\Mapel;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class GuruController extends Controller
     public function index(): View
     {
         return view('admin.gurus.index', [
-            'gurus' => Guru::with('user')->latest()->paginate(10),
+            'gurus' => Guru::with(['user', 'mapel'])->latest()->paginate(10),
         ]);
     }
 
@@ -25,6 +26,7 @@ class GuruController extends Controller
     {
         return view('admin.gurus.create', [
             'guru' => new Guru(),
+            'mapels' => Mapel::orderBy('nama_mapel')->get(),
             'users' => User::where('role', 'guru')->orderBy('name')->get(),
         ]);
     }
@@ -45,6 +47,7 @@ class GuruController extends Controller
     {
         return view('admin.gurus.edit', [
             'guru' => $guru,
+            'mapels' => Mapel::orderBy('nama_mapel')->get(),
             'users' => User::where('role', 'guru')->orderBy('name')->get(),
         ]);
     }
@@ -97,6 +100,6 @@ class GuruController extends Controller
      */
     private function onlyGuruData(array $data): array
     {
-        return collect($data)->only(['user_id', 'id_guru', 'nama_guru', 'mata_pelajaran'])->all();
+        return collect($data)->only(['user_id', 'mapel_id', 'id_guru', 'nama_guru'])->all();
     }
 }

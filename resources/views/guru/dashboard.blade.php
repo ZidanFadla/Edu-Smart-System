@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Dashboard Guru')
-@section('subtitle', $guru ? 'Mata pelajaran: '.$guru->mata_pelajaran : 'Hubungkan akun ini dengan data guru terlebih dahulu.')
+@section('subtitle', $guru ? 'Mata pelajaran: '.$guru->mapel?->nama_mapel : 'Hubungkan akun ini dengan data guru terlebih dahulu.')
 
 @section('content')
     <div class="grid gap-4 md:grid-cols-3">

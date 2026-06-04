@@ -20,7 +20,7 @@
                 <tr class="transition hover:bg-slate-50">
                     <td class="px-5 py-4 font-bold text-slate-900">{{ $nilai->siswa?->nama }}</td>
                     <td class="px-5 py-4 text-slate-600">{{ $nilai->guru?->nama_guru }}</td>
-                    <td class="px-5 py-4 text-slate-600">{{ $nilai->mata_pelajaran }}</td>
+                    <td class="px-5 py-4 text-slate-600">{{ $nilai->mapel?->nama_mapel ?? '-' }}</td>
                     <td class="px-5 py-4">{{ $nilai->nilai_tugas }}</td>
                     <td class="px-5 py-4">{{ $nilai->nilai_uts }}</td>
                     <td class="px-5 py-4">{{ $nilai->nilai_uas }}</td>

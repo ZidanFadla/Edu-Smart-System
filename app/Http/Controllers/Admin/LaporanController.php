@@ -11,7 +11,7 @@ class LaporanController extends Controller
 {
     public function index(Request $request): View
     {
-        $nilais = Nilai::with(['siswa', 'guru'])
+        $nilais = Nilai::with(['siswa', 'guru', 'mapel'])
             ->when($request->filled('nama'), function ($query) use ($request) {
                 $query->whereHas('siswa', fn ($siswa) => $siswa->where('nama', 'like', '%'.$request->nama.'%'));
             })
@@ -19,7 +19,7 @@ class LaporanController extends Controller
                 $query->whereHas('siswa', fn ($siswa) => $siswa->where('kelas', 'like', '%'.$request->kelas.'%'));
             })
             ->when($request->filled('mata_pelajaran'), function ($query) use ($request) {
-                $query->where('mata_pelajaran', 'like', '%'.$request->mata_pelajaran.'%');
+                $query->whereHas('mapel', fn ($mapel) => $mapel->where('nama_mapel', 'like', '%'.$request->mata_pelajaran.'%'));
             })
             ->latest()
             ->paginate(10)

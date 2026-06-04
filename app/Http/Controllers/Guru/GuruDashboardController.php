@@ -21,7 +21,7 @@ class GuruDashboardController extends Controller
         }
 
         return view('guru.dashboard', [
-            'guru' => $guru,
+            'guru' => $guru?->load('mapel'),
             'jumlahNilai' => (clone $query)->count(),
             'jumlahPending' => (clone $query)->where('status_validasi', 'pending')->count(),
             'jumlahValid' => (clone $query)->where('status_validasi', 'valid')->count(),
