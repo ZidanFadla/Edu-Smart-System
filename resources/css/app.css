@@ -1,9 +1,45 @@
 @import 'tailwindcss';
 
+@source '../views/**/*.blade.php';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    body {
+        background:
+            linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(241, 245, 249, 0.98)),
+            repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.035) 0 1px, transparent 1px 56px);
+    }
+
+    input,
+    select,
+    textarea {
+        transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+}
+
+@layer components {
+    .panel {
+        border: 1px solid rgb(226 232 240);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+    }
+
+    .soft-input {
+        border-radius: 12px;
+        border: 1px solid rgb(203 213 225);
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .soft-input:focus {
+        border-color: rgb(79 70 229);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+        outline: none;
+    }
 }
