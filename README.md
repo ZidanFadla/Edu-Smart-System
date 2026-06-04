@@ -1,58 +1,232 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Smart Edu System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Smart Edu System** adalah aplikasi web berbasis Laravel yang dirancang untuk membantu proses pengelolaan nilai siswa secara terkomputerisasi. Sistem ini dibuat untuk memudahkan pihak sekolah dalam mengelola data siswa, data guru, data mata pelajaran, input nilai, perhitungan nilai akhir, penentuan status kelulusan, serta penyajian laporan hasil nilai siswa.
 
-## About Laravel
+Aplikasi ini memiliki tiga jenis pengguna, yaitu **Admin**, **Guru**, dan **Siswa**. Setiap pengguna memiliki hak akses yang berbeda sesuai dengan perannya. Admin dapat mengelola seluruh data dan laporan, Guru dapat menginput serta memvalidasi nilai siswa, sedangkan Siswa dapat melihat nilai pribadi dan status kelulusannya.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Login dan autentikasi pengguna menggunakan Laravel Breeze.
+* Hak akses berdasarkan role Admin, Guru, dan Siswa.
+* Pengelolaan data siswa.
+* Pengelolaan data guru.
+* Pengelolaan data mata pelajaran.
+* Input dan validasi nilai siswa.
+* Perhitungan nilai akhir secara otomatis.
+* Penentuan status kelulusan berdasarkan nilai akhir.
+* Laporan hasil nilai siswa.
+* Tampilan dashboard modern, minimalis, dan mudah digunakan.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Hak Akses Pengguna
 
-## Learning Laravel
+### Admin
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Admin memiliki hak akses penuh untuk menambah, melihat, mengubah, dan menghapus data siswa, data guru, data mata pelajaran, serta data nilai. Admin juga dapat mengelola dan melihat laporan hasil nilai siswa.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Guru
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Guru dapat menginput nilai siswa, melihat rekap nilai, serta memvalidasi nilai siswa sesuai dengan mata pelajaran yang diampu.
 
-## Agentic Development
+### Siswa
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Siswa hanya dapat melihat nilai pribadi, seperti nilai tugas, nilai UTS, nilai UAS, nilai akhir, serta status kelulusan.
 
-```bash
-composer require laravel/boost --dev
+## Rumus Perhitungan Nilai
 
-php artisan boost:install
+Nilai akhir dihitung secara otomatis menggunakan rumus:
+
+```text
+Nilai Akhir = (30% × Nilai Tugas) + (30% × Nilai UTS) + (40% × Nilai UAS)
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Ketentuan kelulusan:
 
-## Contributing
+```text
+Nilai Akhir >= 70 = Lulus
+Nilai Akhir < 70  = Tidak Lulus
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Tech Stack
 
-## Code of Conduct
+* PHP
+* Laravel
+* Laravel Breeze
+* MySQL
+* Blade Template
+* Tailwind CSS
+* Laragon sebagai local development server
+* Visual Studio Code sebagai text editor
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Struktur Sistem
 
-## Security Vulnerabilities
+Sistem ini menggunakan konsep **MVC (Model, View, Controller)** dari Laravel. Model digunakan untuk mengelola data dan relasi database, View digunakan untuk menampilkan halaman antarmuka, sedangkan Controller digunakan untuk mengatur proses request dan response. Selain itu, sistem juga menggunakan Middleware untuk membatasi akses pengguna berdasarkan role.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Alur Menjalankan Program
 
-## License
+### 1. Clone atau Download Project
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Jika project berada di GitHub, clone repository dengan perintah berikut:
+
+```bash
+git clone https://github.com/username/smart-edu-system.git
+```
+
+Masuk ke folder project:
+
+```bash
+cd smart-edu-system
+```
+
+Jika project belum diupload ke GitHub, cukup buka folder project melalui Visual Studio Code.
+
+### 2. Install Dependency Laravel
+
+Jalankan perintah berikut untuk menginstall dependency Laravel:
+
+```bash
+composer install
+```
+
+### 3. Install Dependency Frontend
+
+Karena project menggunakan Laravel Breeze dan Tailwind CSS, jalankan:
+
+```bash
+npm install
+```
+
+Kemudian jalankan build frontend:
+
+```bash
+npm run dev
+```
+
+### 4. Buat File Environment
+
+Salin file `.env.example` menjadi `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Jika menggunakan Windows dan command tersebut tidak berjalan, gunakan:
+
+```bash
+copy .env.example .env
+```
+
+### 5. Generate Application Key
+
+Jalankan perintah berikut:
+
+```bash
+php artisan key:generate
+```
+
+### 6. Buat Database
+
+Buka Laragon, lalu pastikan Apache/Nginx dan MySQL sudah berjalan.
+
+Buat database baru melalui phpMyAdmin atau HeidiSQL dengan nama:
+
+```text
+smart_edu_system
+```
+
+### 7. Konfigurasi Database
+
+Atur koneksi database pada file `.env` seperti berikut:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=smart_edu_system
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Jika MySQL kamu menggunakan password, isi bagian `DB_PASSWORD` sesuai password yang digunakan.
+
+### 8. Jalankan Migration
+
+Jalankan migration untuk membuat tabel di database:
+
+```bash
+php artisan migrate
+```
+
+Jika project sudah menyediakan seeder dan ingin langsung mengisi data awal, gunakan:
+
+```bash
+php artisan migrate --seed
+```
+
+Jika ingin menghapus semua tabel dan menjalankan ulang migration dari awal, gunakan:
+
+```bash
+php artisan migrate:fresh
+```
+
+Jika ingin reset database sekaligus menjalankan seeder, gunakan:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 9. Jalankan Server Laravel
+
+Jalankan aplikasi Laravel dengan command berikut:
+
+```bash
+php artisan serve
+```
+
+Setelah itu buka browser dan akses:
+
+```text
+http://127.0.0.1:8000
+```
+
+### 10. Login ke Sistem
+
+Jika seeder akun default sudah tersedia, gunakan akun berikut:
+
+```text
+Admin
+Email    : admin@example.com
+Password : password
+```
+
+```text
+Guru
+Email    : guru@example.com
+Password : password
+```
+
+```text
+Siswa
+Email    : siswa@example.com
+Password : password
+```
+
+Setelah login, pengguna akan diarahkan ke dashboard sesuai role masing-masing.
+
+## Alur Penggunaan Sistem
+
+1. Pengguna melakukan login ke sistem.
+2. Sistem memeriksa role pengguna.
+3. Admin dapat mengelola data siswa, guru, mata pelajaran, nilai, dan laporan.
+4. Guru dapat menginput nilai, memvalidasi nilai, dan melihat rekap nilai.
+5. Siswa dapat melihat nilai pribadi dan status kelulusan.
+6. Sistem menghitung nilai akhir secara otomatis berdasarkan nilai tugas, UTS, dan UAS.
+7. Sistem menentukan status kelulusan berdasarkan nilai akhir.
+8. Laporan nilai dapat dilihat melalui menu laporan.
+
+## Catatan Pengembangan
+
+Project ini dibuat untuk kebutuhan pembelajaran dan dokumentasi tugas pengembangan aplikasi web. Sistem difokuskan pada fitur utama pengolahan nilai siswa, sehingga belum mencakup fitur lain seperti absensi, jadwal pelajaran, pembayaran, notifikasi, atau integrasi sistem akademik lainnya.
+
+## Tujuan Project
+
+Tujuan dari project ini adalah untuk membuat sistem pengolahan nilai siswa yang lebih terstruktur, cepat, dan akurat. Dengan adanya sistem ini, proses input nilai, validasi nilai, perhitungan nilai akhir, penentuan status kelulusan, serta pembuatan laporan dapat dilakukan dengan lebih mudah dan efisien.
