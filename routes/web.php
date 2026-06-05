@@ -40,6 +40,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
         Route::resource('siswas', SiswaController::class)->except(['show']);
         Route::resource('mapels', MapelController::class)->except(['show']);
+        Route::get('gurus/pdf', [GuruController::class, 'exportPdf'])->name('gurus.pdf');
         Route::resource('gurus', GuruController::class)->except(['show']);
         Route::get('nilais', [NilaiController::class, 'index'])->name('nilais.index');
         Route::patch('nilais/{nilai}/validasi', [NilaiController::class, 'validateNilai'])->name('nilais.validasi');

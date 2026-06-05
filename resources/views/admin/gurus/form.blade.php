@@ -26,7 +26,13 @@
         </div>
         <div>
             <label class="mb-2 block text-sm font-semibold text-slate-600">ID Guru</label>
-            <input name="id_guru" value="{{ old('id_guru', $guru->id_guru) }}" class="soft-input w-full px-3.5 py-2.5 text-sm" required>
+            @if ($guru->exists)
+                <input value="{{ $guru->id_guru }}" class="soft-input w-full bg-slate-100 px-3.5 py-2.5 text-sm text-slate-500" readonly>
+            @else
+                <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-500">
+                    Dibuat otomatis saat disimpan, contoh: GR001, GR002, dan seterusnya.
+                </div>
+            @endif
         </div>
         <div>
             <label class="mb-2 block text-sm font-semibold text-slate-600">Nama Guru</label>
