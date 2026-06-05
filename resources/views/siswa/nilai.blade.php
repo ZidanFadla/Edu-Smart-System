@@ -4,39 +4,43 @@
 @section('subtitle', $siswa ? 'Daftar nilai pribadi '.$siswa->nama : 'Data siswa belum terhubung.')
 
 @section('content')
-    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <table class="min-w-full divide-y divide-slate-200 text-sm">
-            <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                <tr>
-                    <th class="px-4 py-3">Mata Pelajaran</th>
-                    <th class="px-4 py-3">Guru</th>
-                    <th class="px-4 py-3">Tugas</th>
-                    <th class="px-4 py-3">UTS</th>
-                    <th class="px-4 py-3">UAS</th>
-                    <th class="px-4 py-3">Akhir</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Validasi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-                @forelse ($nilais as $nilai)
+    <div class="panel overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="modern-table">
+                <thead>
                     <tr>
-                        <td class="px-4 py-3 font-medium text-slate-900">{{ $nilai->mapel?->nama_mapel ?? '-' }}</td>
-                        <td class="px-4 py-3">{{ $nilai->guru?->nama_guru }}</td>
-                        <td class="px-4 py-3">{{ $nilai->nilai_tugas }}</td>
-                        <td class="px-4 py-3">{{ $nilai->nilai_uts }}</td>
-                        <td class="px-4 py-3">{{ $nilai->nilai_uas }}</td>
-                        <td class="px-4 py-3 font-semibold">{{ $nilai->nilai_akhir }}</td>
-                        <td class="px-4 py-3">
-                            <span class="rounded-full px-2.5 py-1 text-xs font-semibold {{ $nilai->status_kelulusan === 'Lulus' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' }}">{{ $nilai->status_kelulusan }}</span>
-                        </td>
-                        <td class="px-4 py-3">{{ $nilai->status_validasi }}</td>
+                        <th>Mata Pelajaran</th>
+                        <th>Guru</th>
+                        <th>Tugas</th>
+                        <th>UTS</th>
+                        <th>UAS</th>
+                        <th>Akhir</th>
+                        <th>Status</th>
+                        <th>Validasi</th>
                     </tr>
-                @empty
-                    <tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">Belum ada nilai.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($nilais as $nilai)
+                        <tr>
+                            <td class="font-semibold text-slate-800">{{ $nilai->mapel?->nama_mapel ?? '-' }}</td>
+                            <td>{{ $nilai->guru?->nama_guru }}</td>
+                            <td>{{ $nilai->nilai_tugas }}</td>
+                            <td>{{ $nilai->nilai_uts }}</td>
+                            <td>{{ $nilai->nilai_uas }}</td>
+                            <td class="font-bold text-slate-800">{{ $nilai->nilai_akhir }}</td>
+                            <td>
+                                <span class="badge {{ $nilai->status_kelulusan === 'Lulus' ? 'badge-success' : 'badge-danger' }}">{{ $nilai->status_kelulusan }}</span>
+                            </td>
+                            <td>
+                                <span class="badge {{ $nilai->status_validasi === 'valid' ? 'badge-info' : 'badge-warning' }}">{{ $nilai->status_validasi }}</span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="8" class="!py-10 text-center text-slate-400">Belum ada nilai.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
     @if (method_exists($nilais, 'links'))
         <div class="mt-4">{{ $nilais->links() }}</div>
