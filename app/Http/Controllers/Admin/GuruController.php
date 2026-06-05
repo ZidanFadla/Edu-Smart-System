@@ -8,13 +8,17 @@ use App\Http\Requests\UpdateGuruRequest;
 use App\Models\Guru;
 use App\Models\Mapel;
 use App\Models\User;
+use App\Services\UserAccountService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class GuruController extends Controller
 {
+    public function __construct(private readonly UserAccountService $userAccountService)
+    {
+    }
+
     public function index(): View
     {
         return view('admin.gurus.index', [
@@ -35,9 +39,9 @@ class GuruController extends Controller
     {
         DB::transaction(function () use ($request): void {
             $data = $request->validated();
-            $data['user_id'] = $this->resolveUserId($data, 'guru', $data['nama_guru']);
+            $data['user_id'] = $this->userAccountService->resolveUserId($data, 'guru', $data['nama_guru']);
 
-            Guru::create($this->onlyGuruData($data));
+            Guru::create($this->guruData($data));
         });
 
         return redirect()->route('admin.gurus.index')->with('success', 'Data guru berhasil ditambahkan.');
@@ -56,9 +60,9 @@ class GuruController extends Controller
     {
         DB::transaction(function () use ($request, $guru): void {
             $data = $request->validated();
-            $data['user_id'] = $this->resolveUserId($data, 'guru', $data['nama_guru'], $guru->user);
+            $data['user_id'] = $this->userAccountService->resolveUserId($data, 'guru', $data['nama_guru'], $guru->user);
 
-            $guru->update($this->onlyGuruData($data));
+            $guru->update($this->guruData($data));
         });
 
         return redirect()->route('admin.gurus.index')->with('success', 'Data guru berhasil diperbarui.');
@@ -73,32 +77,9 @@ class GuruController extends Controller
 
     /**
      * @param  array<string, mixed>  $data
-     */
-    private function resolveUserId(array $data, string $role, string $name, ?User $currentUser = null): ?int
-    {
-        if (! empty($data['account_email'])) {
-            $user = $currentUser ?? new User(['role' => $role]);
-            $user->name = $name;
-            $user->email = $data['account_email'];
-            $user->role = $role;
-
-            if (! empty($data['account_password'])) {
-                $user->password = Hash::make($data['account_password']);
-            }
-
-            $user->save();
-
-            return $user->id;
-        }
-
-        return $data['user_id'] ?? $currentUser?->id;
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
-    private function onlyGuruData(array $data): array
+    private function guruData(array $data): array
     {
         return collect($data)->only(['user_id', 'mapel_id', 'id_guru', 'nama_guru'])->all();
     }

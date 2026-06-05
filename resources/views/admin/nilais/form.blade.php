@@ -27,15 +27,6 @@
             </select>
         </div>
         <div>
-            <label class="mb-2 block text-sm font-semibold text-slate-600">Mata Pelajaran</label>
-            <select name="mapel_id" class="soft-input w-full px-3.5 py-2.5 text-sm" required>
-                <option value="">Pilih mapel</option>
-                @foreach ($mapels as $mapel)
-                    <option value="{{ $mapel->id }}" @selected(old('mapel_id', $nilai->mapel_id) == $mapel->id)>{{ $mapel->kode_mapel }} - {{ $mapel->nama_mapel }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div>
             <label class="mb-2 block text-sm font-semibold text-slate-600">Nilai Tugas</label>
             <input name="nilai_tugas" type="number" min="0" max="100" step="0.01" value="{{ old('nilai_tugas', $nilai->nilai_tugas) }}" class="soft-input w-full px-3.5 py-2.5 text-sm" required>
         </div>

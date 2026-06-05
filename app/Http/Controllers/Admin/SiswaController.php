@@ -7,13 +7,17 @@ use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Services\UserAccountService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class SiswaController extends Controller
 {
+    public function __construct(private readonly UserAccountService $userAccountService)
+    {
+    }
+
     public function index(): View
     {
         return view('admin.siswas.index', [
@@ -33,9 +37,9 @@ class SiswaController extends Controller
     {
         DB::transaction(function () use ($request): void {
             $data = $request->validated();
-            $data['user_id'] = $this->resolveUserId($data, 'siswa', $data['nama']);
+            $data['user_id'] = $this->userAccountService->resolveUserId($data, 'siswa', $data['nama']);
 
-            Siswa::create($this->onlySiswaData($data));
+            Siswa::create($this->siswaData($data));
         });
 
         return redirect()->route('admin.siswas.index')->with('success', 'Data siswa berhasil ditambahkan.');
@@ -53,9 +57,9 @@ class SiswaController extends Controller
     {
         DB::transaction(function () use ($request, $siswa): void {
             $data = $request->validated();
-            $data['user_id'] = $this->resolveUserId($data, 'siswa', $data['nama'], $siswa->user);
+            $data['user_id'] = $this->userAccountService->resolveUserId($data, 'siswa', $data['nama'], $siswa->user);
 
-            $siswa->update($this->onlySiswaData($data));
+            $siswa->update($this->siswaData($data));
         });
 
         return redirect()->route('admin.siswas.index')->with('success', 'Data siswa berhasil diperbarui.');
@@ -70,32 +74,9 @@ class SiswaController extends Controller
 
     /**
      * @param  array<string, mixed>  $data
-     */
-    private function resolveUserId(array $data, string $role, string $name, ?User $currentUser = null): ?int
-    {
-        if (! empty($data['account_email'])) {
-            $user = $currentUser ?? new User(['role' => $role]);
-            $user->name = $name;
-            $user->email = $data['account_email'];
-            $user->role = $role;
-
-            if (! empty($data['account_password'])) {
-                $user->password = Hash::make($data['account_password']);
-            }
-
-            $user->save();
-
-            return $user->id;
-        }
-
-        return $data['user_id'] ?? $currentUser?->id;
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
-    private function onlySiswaData(array $data): array
+    private function siswaData(array $data): array
     {
         return collect($data)->only(['user_id', 'nis', 'nama', 'kelas'])->all();
     }

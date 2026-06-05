@@ -16,7 +16,6 @@ class StoreNilaiRequest extends FormRequest
         return [
             'siswa_id' => ['required', 'exists:siswas,id'],
             'guru_id' => ['required', 'exists:gurus,id'],
-            'mapel_id' => ['required', 'exists:mapels,id'],
             'nilai_tugas' => ['required', 'numeric', 'min:0', 'max:100'],
             'nilai_uts' => ['required', 'numeric', 'min:0', 'max:100'],
             'nilai_uas' => ['required', 'numeric', 'min:0', 'max:100'],
