@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 use App\Models\Siswa;
-use App\Models\User;
 use App\Services\UserAccountService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +27,6 @@ class SiswaController extends Controller
     public function create(): View
     {
         return view('admin.siswas.create', [
-            'users' => User::where('role', 'siswa')->orderBy('name')->get(),
             'siswa' => new Siswa(),
         ]);
     }
@@ -49,7 +47,6 @@ class SiswaController extends Controller
     {
         return view('admin.siswas.edit', [
             'siswa' => $siswa,
-            'users' => User::where('role', 'siswa')->orderBy('name')->get(),
         ]);
     }
 

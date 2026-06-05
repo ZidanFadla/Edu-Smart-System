@@ -14,9 +14,8 @@ class StoreGuruRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['nullable', 'exists:users,id'],
-            'account_email' => ['nullable', 'email', 'max:255', 'unique:users,email'],
-            'account_password' => ['nullable', 'required_with:account_email', 'string', 'min:8'],
+            'account_email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'account_password' => ['required', 'string', 'min:8'],
             'mapel_id' => ['required', 'exists:mapels,id'],
             'id_guru' => ['required', 'string', 'max:50', 'unique:gurus,id_guru'],
             'nama_guru' => ['required', 'string', 'max:255'],

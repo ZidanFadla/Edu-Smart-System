@@ -7,7 +7,6 @@ use App\Http\Requests\StoreGuruRequest;
 use App\Http\Requests\UpdateGuruRequest;
 use App\Models\Guru;
 use App\Models\Mapel;
-use App\Models\User;
 use App\Services\UserAccountService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +30,6 @@ class GuruController extends Controller
         return view('admin.gurus.create', [
             'guru' => new Guru(),
             'mapels' => Mapel::orderBy('nama_mapel')->get(),
-            'users' => User::where('role', 'guru')->orderBy('name')->get(),
         ]);
     }
 
@@ -52,7 +50,6 @@ class GuruController extends Controller
         return view('admin.gurus.edit', [
             'guru' => $guru,
             'mapels' => Mapel::orderBy('nama_mapel')->get(),
-            'users' => User::where('role', 'guru')->orderBy('name')->get(),
         ]);
     }
 

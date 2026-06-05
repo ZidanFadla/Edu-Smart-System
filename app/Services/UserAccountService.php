@@ -12,10 +12,6 @@ class UserAccountService
      */
     public function resolveUserId(array $data, string $role, string $name, ?User $currentUser = null): ?int
     {
-        if (empty($data['account_email'])) {
-            return $data['user_id'] ?? $currentUser?->id;
-        }
-
         $user = $currentUser ?? new User(['role' => $role]);
         $user->name = $name;
         $user->email = $data['account_email'];
