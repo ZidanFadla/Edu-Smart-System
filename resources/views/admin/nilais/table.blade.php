@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th>Siswa</th>
+                <th>Kelas</th>
                 <th>Guru</th>
                 <th>Mapel</th>
                 <th>Tugas</th>
@@ -12,13 +13,16 @@
                 <th>Akhir</th>
                 <th>Kelulusan</th>
                 <th>Validasi</th>
-                <th class="text-right">Aksi</th>
+                @if ($mode !== 'laporan')
+                    <th class="text-right">Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
             @forelse ($nilais as $nilai)
                 <tr>
                     <td class="font-semibold text-slate-800">{{ $nilai->siswa?->nama }}</td>
+                    <td>{{ $nilai->siswa?->kelas }}</td>
                     <td>{{ $nilai->guru?->nama_guru }}</td>
                     <td>{{ $nilai->mapel?->nama_mapel ?? '-' }}</td>
                     <td>{{ $nilai->nilai_tugas }}</td>
@@ -31,11 +35,12 @@
                     <td>
                         <span class="badge {{ $nilai->status_validasi === 'valid' ? 'badge-info' : 'badge-warning' }}">{{ $nilai->status_validasi }}</span>
                     </td>
+                    @if ($mode !== 'laporan')
                     <td>
                         <div class="flex justify-end gap-2">
                             @php
                                 $prefix = $mode === 'guru' ? 'guru' : 'admin';
-                                $canEdit = $mode === 'admin' || $nilai->status_validasi !== 'valid';
+                                $canEdit = $mode === 'guru' && $nilai->status_validasi !== 'valid';
                             @endphp
                             @if ($canEdit)
                                 <a href="{{ route($prefix.'.nilais.edit', $nilai) }}" class="btn-edit">Edit</a>
@@ -47,18 +52,12 @@
                                     <button class="btn-success">Validasi</button>
                                 </form>
                             @endif
-                            @if ($mode === 'admin')
-                                <form method="POST" action="{{ route('admin.nilais.destroy', $nilai) }}" onsubmit="return confirm('Hapus data nilai ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn-danger">Hapus</button>
-                                </form>
-                            @endif
                         </div>
                     </td>
+                    @endif
                 </tr>
             @empty
-                <tr><td colspan="10" class="!py-10 text-center text-slate-400">Belum ada data nilai.</td></tr>
+                <tr><td colspan="{{ $mode === 'laporan' ? 10 : 11 }}" class="!py-10 text-center text-slate-400">Belum ada data nilai.</td></tr>
             @endforelse
         </tbody>
     </table>

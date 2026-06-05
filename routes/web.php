@@ -41,9 +41,10 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('siswas', SiswaController::class)->except(['show']);
         Route::resource('mapels', MapelController::class)->except(['show']);
         Route::resource('gurus', GuruController::class)->except(['show']);
+        Route::get('nilais', [NilaiController::class, 'index'])->name('nilais.index');
         Route::patch('nilais/{nilai}/validasi', [NilaiController::class, 'validateNilai'])->name('nilais.validasi');
-        Route::resource('nilais', NilaiController::class)->except(['show']);
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('laporan/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
     });
 
 Route::middleware(['auth', 'role:guru'])
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'role:guru'])
         Route::get('nilais/{nilai}/edit', [NilaiController::class, 'edit'])->name('nilais.edit');
         Route::put('nilais/{nilai}', [NilaiController::class, 'update'])->name('nilais.update');
         Route::patch('nilais/{nilai}/validasi', [NilaiController::class, 'validateNilai'])->name('nilais.validasi');
+        Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('laporan/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
     });
 
 Route::middleware(['auth', 'role:siswa'])
